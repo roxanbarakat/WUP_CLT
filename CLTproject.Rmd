@@ -1,6 +1,6 @@
 ---
 title: "CLT_WUP"
-author: "Your Name"
+author: "Roxan Barakat"
 output: 
   html_document:
     number_sections: true
@@ -87,3 +87,44 @@ print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
 ### In this case the stdev was cut in half because the sample size was four. This is what the central limit theorem says. There are also 5 peaks. They go from FFFF,to FFFM, to FFMM to FMMM and finally MMMM.
 
 # Now finish by adding blocks with numb being 9, then 16, 25, and 36. be sure to mention how the standard deviation progresses as the sample size changes,
+
+```{r}
+numb=9
+Hdata = Homers_data[sample(1:1000, size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k9 = x.avg
+
+p <- ggplot(my1000, aes(x=k9)) + 
+  geom_density() 
+p
+
+# Add mean line
+  geom_vline(aes(xintercept=mean(k9)),
+            color="blue", linetype="dashed", size=1)
+print(paste('mean = ', mean(my1000$k9),' sd = ',sd(my1000$k9)))
+
+```
+The graph is appearing uni model around where we have 9 samples. but we have a bi model distribution in the beginning and end of the graphs where they are progressing towards a uni model distribution.
+
+```{r}
+numb = 16
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k16 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k16),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k16)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 16") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k16),' sd = ',sd(my1000$k16)))
+
+```
+
